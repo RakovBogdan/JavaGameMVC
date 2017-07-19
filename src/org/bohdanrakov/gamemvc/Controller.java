@@ -4,12 +4,12 @@ import org.bohdanrakov.gamemvc.model.*;
 
 public class Controller {
 
-    private MoreOrLess moreOrLess;
+    private MoreOrLessGame game;
     private View view;
 
     public Controller(View view) {
         this.view = view;
-        this.moreOrLess = new MoreOrLess(0, 100);
+        this.game = new MoreOrLessGame(0, 100);
     }
 
     public void processUser() {
