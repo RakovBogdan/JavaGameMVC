@@ -3,6 +3,7 @@ package org.bohdanrakov.gamemvc.model;
 public class MoreOrLessGame {
 
     private int lastGuess;
+    private boolean lastGuessSmaller;
     private boolean guessed = false;
 
     private int rangeMin;
@@ -14,7 +15,7 @@ public class MoreOrLessGame {
 
     public MoreOrLessGame(int minValue, int maxValue) {
         this.numberToGuess = RandomGenerator.rand(minValue, maxValue);
-        this.tries = new int[maxValue];
+        this.tries = new int[maxValue + 1];
         this.rangeMin = minValue;
         this.rangeMax = maxValue;
     }
@@ -52,8 +53,10 @@ public class MoreOrLessGame {
     private void adjustRange() {
         if (lastGuess > numberToGuess) {
             rangeMax = lastGuess - 1;
+            lastGuessSmaller = false;
         } else {
             rangeMin = lastGuess + 1;
+            lastGuessSmaller = true;
         }
     }
 
@@ -79,5 +82,9 @@ public class MoreOrLessGame {
 
     public int getRangeMax() {
         return rangeMax;
+    }
+
+    public boolean isLastGuessSmaller() {
+        return this.lastGuessSmaller;
     }
 }
