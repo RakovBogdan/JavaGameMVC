@@ -4,6 +4,9 @@ public class View {
 
     public static final String WELCOME = "Welcome to More or less game!\n" +
             "Enter a number to guess from 0 to 100:";
+    public static final String INPUT_INT_DATA = "Input INT value: ";
+    public static final String WRONG_INPUT_TYPE = "Wrong input! Input INTEGER value: ";
+    public static final String WRONG_INPUT_RANGE = "Wrong input! Input value in given range: ";
     public static final String IS_SMALLER = "Nope! Try bigger number";
     public static final String IS_BIGGER = "Nope! Try smaller number";
     public static final String TRIES = "Your tries are: ";
