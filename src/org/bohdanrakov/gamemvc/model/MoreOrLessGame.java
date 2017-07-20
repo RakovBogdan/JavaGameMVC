@@ -60,8 +60,17 @@ public class MoreOrLessGame {
         }
     }
 
-    public int[] getTries() {
-        return this.tries;
+    /**
+     * Returns String representation of tries array, to get rid of
+     * trailing zeroes
+     * @return {@code String} representing tries array
+     */
+    public String getTriesAsString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < numberOfTries; i++) {
+            sb.append(tries[i]).append(" ");
+        }
+        return sb.toString();
     }
 
     public int getLastGuess() {
