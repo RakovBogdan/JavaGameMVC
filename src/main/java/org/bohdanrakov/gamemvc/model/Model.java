@@ -1,23 +1,40 @@
 package org.bohdanrakov.gamemvc.model;
 
-public class MoreOrLessGame {
+public class Model {
 
     private int lastGuess;
     private boolean lastGuessSmaller;
     private boolean guessed = false;
 
-    private int rangeMin;
-    private int rangeMax;
+    /** Range for user to guess from
+     * changes after each try with adjustRange()
+     */
+    private int rangeMin, rangeMax;
 
     private int numberToGuess;
     private int numberOfTries = 0;
+    /** Array that holds users tries to guess the number*/
     private int[] tries;
 
-    public MoreOrLessGame(int minValue, int maxValue) {
-        this.numberToGuess = RandomGenerator.rand(minValue, maxValue);
-        this.tries = new int[maxValue + 1];
-        this.rangeMin = minValue;
-        this.rangeMax = maxValue;
+    /**
+     * Sets the game range
+     * @param minimum
+     * @param maximum
+     */
+    public void setRange(int minimum, int maximum) {
+        rangeMin = minimum;
+        rangeMax = maximum;
+    }
+    /**
+     * Sets the number which user has to guess
+     * From (rangeMin to rangeMax) exclusive
+     */
+    public void setNumberToGuess() {
+        numberToGuess = RandomGenerator.rand(rangeMin + 1, rangeMax - 1);
+    }
+
+    public void initializeHistoryOfTries() {
+        tries = new int[rangeMax];
     }
 
     /**

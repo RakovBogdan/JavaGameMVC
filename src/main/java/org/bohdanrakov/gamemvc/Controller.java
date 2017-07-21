@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 public class Controller {
 
-    private MoreOrLessGame game;
+    private Model game;
     private View view;
 
-    public Controller(View view) {
+    public Controller(Model model, View view) {
         this.view = view;
-        this.game = new MoreOrLessGame(0, 100);
+        this.game = model;
     }
 
     /**
@@ -19,6 +19,11 @@ public class Controller {
      */
     public void processUser() {
         view.printMessage(View.WELCOME);
+
+        game.setRange(BoundsConstants.MIN_VALUE, BoundsConstants.MAX_VALUE);
+        game.setNumberToGuess();
+        game.initializeHistoryOfTries();
+
         Scanner scanner = new Scanner(System.in);
 
         makeGuess(scanner);
@@ -77,7 +82,7 @@ public class Controller {
      * @return {@code true} if value is in range
      */
     public boolean isValueInRange(int value, int rangeMin, int rangeMax) {
-        if (value < rangeMin || value > rangeMax) {
+        if (value <= rangeMin || value >= rangeMax) {
             view.printMessageAndTwoInts(View.WRONG_INPUT_RANGE, rangeMin, rangeMax);
             return false;
         } else {
