@@ -69,10 +69,10 @@ public class Model {
      */
     private void adjustRange() {
         if (lastGuess > numberToGuess) {
-            rangeMax = lastGuess - 1;
+            rangeMax = lastGuess;
             lastGuessSmaller = false;
         } else {
-            rangeMin = lastGuess + 1;
+            rangeMin = lastGuess;
             lastGuessSmaller = true;
         }
     }
@@ -108,6 +108,10 @@ public class Model {
 
     public int getRangeMax() {
         return rangeMax;
+    }
+
+    int getNumberToGuess() {
+        return numberToGuess;
     }
 
     public boolean isLastGuessSmaller() {

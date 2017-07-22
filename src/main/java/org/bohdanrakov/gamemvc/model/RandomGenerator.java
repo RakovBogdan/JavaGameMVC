@@ -2,7 +2,13 @@ package org.bohdanrakov.gamemvc.model;
 
 import java.util.Random;
 
+/**
+ * Utility class with only static methods and fields
+ * that generates random values;
+ */
 public class RandomGenerator {
+
+    private RandomGenerator() {}
 
     private static final int RAND_MAX = Integer.MAX_VALUE;
 
