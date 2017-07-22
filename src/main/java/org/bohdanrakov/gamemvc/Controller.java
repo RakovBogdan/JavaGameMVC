@@ -20,22 +20,14 @@ public class Controller {
     public void processUser() {
         view.printMessage(View.WELCOME);
 
+        //Initialize game
         game.setRange(BoundsConstants.MIN_VALUE, BoundsConstants.MAX_VALUE);
         game.setNumberToGuess();
         game.initializeHistoryOfTries();
 
         Scanner scanner = new Scanner(System.in);
 
-        makeGuess(scanner);
-
         while (!game.isGuessed()) {
-            showStatistics();
-
-            if (game.isLastGuessSmaller()) view.printMessage(View.IS_SMALLER);
-            else view.printMessage(View.IS_BIGGER);
-            view.printMessageAndTwoInts(View.RANGE, game.getRangeMin(),
-                    game.getRangeMax());
-
             makeGuess(scanner);
         }
 
@@ -75,7 +67,7 @@ public class Controller {
     }
 
     /**
-     * Checks the value to be in given range (inclusive)
+     * Checks the value to be in given range (exclusive)
      * @param value value to check
      * @param rangeMin minimum value (bound) of range
      * @param rangeMax maximum value (bound) of range
@@ -97,10 +89,15 @@ public class Controller {
      * @param scanner {@code Scanner}
      */
     public void makeGuess(Scanner scanner) {
+        view.printMessageAndTwoInts(View.RANGE, game.getRangeMin(),
+                game.getRangeMax());
         int guess;
         do {
             guess = inputIntValue(scanner);
         } while (!isValueInRange(guess, game.getRangeMin(), game.getRangeMax()));
         game.makeGuess(guess);
+        showStatistics();
+        if (game.isLastGuessSmaller()) view.printMessage(View.IS_SMALLER);
+        else view.printMessage(View.IS_BIGGER);
     }
 }
