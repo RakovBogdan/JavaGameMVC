@@ -27,35 +27,12 @@ public class Controller {
 
         Scanner scanner = new Scanner(System.in);
 
-        while (!game.isGuessed()) {
-            makeGuess(scanner);
-        }
+        while (!game.makeGuess(getUserInput(scanner))) { showStatistics(); }
 
         showGameOver();
     }
 
     //Utility Methods
-
-    /**
-     * Method that uses {@code View} to show game statistics
-     */
-    public void showStatistics() {
-        view.printMessage(View.STATISTICS);
-        view.printMessageAndInt(View.NUMBER_OF_TRIES, game.getNumberOfTries());
-        view.printMessage(View.TRIES + game.getTriesAsString());
-        view.printMessageAndInt(View.LAST_GUESS, game.getLastGuess());
-        view.printMessage(View.STATISTICS_LOWER);
-        view.printMessage("");
-    }
-
-    /**
-     * Method that uses {@code View} to show end of the game
-     */
-    public void showGameOver() {
-        view.printMessageAndInt(View.GAME_OVER, game.getLastGuess());
-        view.printMessageAndInt(View.NUMBER_OF_TRIES, game.getNumberOfTries());
-        view.printMessage(View.TRIES + game.getTriesAsString());
-    }
 
     public int inputIntValue(Scanner scanner) {
         view.printMessage(View.INPUT_INT_DATA);
@@ -83,21 +60,47 @@ public class Controller {
     }
 
     /**
-     * Method that makes guess call to model.
      * Gets user input with {@code inputIntValue()}
      * and performs checking if the user input is in game's range with {@code isValueInRange()}
      * @param scanner {@code Scanner}
+     * @return {@code int} guess made by user
      */
-    public void makeGuess(Scanner scanner) {
+    public int getUserInput(Scanner scanner) {
         view.printMessageAndTwoInts(View.RANGE, game.getRangeMin(),
                 game.getRangeMax());
-        int guess;
-        do {
+
+        int guess = inputIntValue(scanner);
+
+        while (!isValueInRange(guess, game.getRangeMin(), game.getRangeMax())) {
             guess = inputIntValue(scanner);
-        } while (!isValueInRange(guess, game.getRangeMin(), game.getRangeMax()));
-        game.makeGuess(guess);
-        showStatistics();
-        if (game.isLastGuessSmaller()) view.printMessage(View.IS_SMALLER);
-        else view.printMessage(View.IS_BIGGER);
+        }
+
+        return guess;
+    }
+
+    /**
+     * Method that calls {@code View} to show game statistics
+     */
+    public void showStatistics() {
+        view.printMessage(View.STATISTICS);
+        view.printMessageAndInt(View.NUMBER_OF_TRIES, game.getNumberOfTries());
+        view.printMessage(View.TRIES + game.getTriesAsString());
+        view.printMessageAndInt(View.LAST_GUESS, game.getLastGuess());
+        view.printMessage(View.STATISTICS_LOWER);
+        view.printMessage("");
+        if (game.isLastGuessSmaller()) {
+            view.printMessage(View.IS_SMALLER);
+        } else {
+            view.printMessage(View.IS_BIGGER);
+        }
+    }
+
+    /**
+     * Method that calls {@code View} to show end of the game
+     */
+    public void showGameOver() {
+        view.printMessageAndInt(View.GAME_OVER, game.getLastGuess());
+        view.printMessageAndInt(View.NUMBER_OF_TRIES, game.getNumberOfTries());
+        view.printMessage(View.TRIES + game.getTriesAsString());
     }
 }

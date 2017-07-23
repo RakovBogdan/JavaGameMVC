@@ -2,13 +2,10 @@ package org.bohdanrakov.gamemvc.model;
 
 public class Model {
 
+    /** Holds last guess made by user*/
     private int lastGuess;
-    private boolean lastGuessSmaller;
-    private boolean guessed = false;
 
-    /** Range for user to guess from
-     * changes after each try with adjustRange()
-     */
+    /** Range for user to make guess. Changes after each try with adjustRange() */
     private int rangeMin, rangeMax;
 
     private int numberToGuess;
@@ -18,13 +15,14 @@ public class Model {
 
     /**
      * Sets the game range
-     * @param minimum
-     * @param maximum
+     * @param minimum minimum bound (exclusive)
+     * @param maximum maximum bound (exclusive)
      */
     public void setRange(int minimum, int maximum) {
         rangeMin = minimum;
         rangeMax = maximum;
     }
+
     /**
      * Sets the number which user has to guess
      * From (rangeMin to rangeMax) exclusive
@@ -33,6 +31,10 @@ public class Model {
         numberToGuess = RandomGenerator.rand(rangeMin + 1, rangeMax - 1);
     }
 
+    /**
+     * Method required to initialize the user's history of tries.
+     * Required because customer wanted array implementation instead of {@code List}
+     */
     public void initializeHistoryOfTries() {
         tries = new int[rangeMax];
     }
@@ -41,18 +43,13 @@ public class Model {
      * Method that checks User's guess to be equal to the {@code numberToGuess}.
      * If guess is correct, return {@code true} else adjust the
      * range for user to guess from appropriately with {@code adjustRange()}.
-     * This method also saves the guessed number to {@code tries array} and
-     * saves last try to {@code lastGuess} variable
-     * @param guess
-     * @return
+     * @param guess Users guess
+     * @return {@code true} if number is guessed
      */
     public boolean makeGuess(int guess) {
-        tries[numberOfTries] = guess;
-        numberOfTries++;
-        lastGuess = guess;
+        addToHistoryOfGuesses(guess);
 
         if (guess == numberToGuess) {
-            guessed = true;
             return true;
         } else {
             adjustRange();
@@ -61,19 +58,35 @@ public class Model {
     }
 
     /**
+     * This method saves the guessed number to {@code tries array} and
+     * saves last try to {@code lastGuess} variable
+     * @param guess guess made by user
+     */
+    private void addToHistoryOfGuesses(int guess) {
+        tries[numberOfTries] = guess;
+        numberOfTries++;
+        lastGuess = guess;
+    }
+
+    /**
+     * Checks if the last user guess is smaller than number to guess
+     * @return true if lastGuess < numberToGuess
+     */
+    public boolean isLastGuessSmaller() {
+        return lastGuess < numberToGuess;
+    }
+
+    /**
      * Adjusts range for player to guess from
-     * depending on the las guess he made. If his guess is greater than
-     * actual number, make a {@code rangeMax} maximum range bound
-     * smaller than {@code lastGuess} by one. If the guess is smaller, make
-     * {@code rangeMin} minimum range bound greater than lastGuess by one
+     * depending on the last guess he made. If his guess is greater than
+     * actual number, make a {@code rangeMax} maximum range bound equal to {@code lastGuess}.
+     * If the guess is smaller, make {@code rangeMin} minimum range bound equal to {@code lastGuess}
      */
     private void adjustRange() {
         if (lastGuess > numberToGuess) {
             rangeMax = lastGuess;
-            lastGuessSmaller = false;
         } else {
             rangeMin = lastGuess;
-            lastGuessSmaller = true;
         }
     }
 
@@ -98,10 +111,6 @@ public class Model {
         return this.numberOfTries;
     }
 
-    public boolean isGuessed() {
-        return this.guessed;
-    }
-
     public int getRangeMin() {
         return rangeMin;
     }
@@ -112,9 +121,5 @@ public class Model {
 
     int getNumberToGuess() {
         return numberToGuess;
-    }
-
-    public boolean isLastGuessSmaller() {
-        return this.lastGuessSmaller;
     }
 }

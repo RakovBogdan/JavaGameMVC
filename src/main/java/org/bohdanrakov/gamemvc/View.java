@@ -5,7 +5,7 @@ public class View {
     public static final String WELCOME = "Welcome to More or less game!";
     public static final String INPUT_INT_DATA = "Input INT value: ";
     public static final String WRONG_INPUT_TYPE = "Wrong input! Input INTEGER value: ";
-    public static final String WRONG_INPUT_RANGE = "Wrong input! Input value in given range: ";
+    public static final String WRONG_INPUT_RANGE = "Wrong input! Input value between: ";
     public static final String IS_SMALLER = "Nope! Try bigger number";
     public static final String IS_BIGGER = "Nope! Try smaller number";
     public static final String TRIES = "Your tries are: ";
@@ -14,7 +14,7 @@ public class View {
     public static final String STATISTICS = "-------Statistics-------";
     public static final String STATISTICS_LOWER = "------------------------";
     public static final String GAME_OVER = "Congratulations! You've got the number: ";
-    public static final String RANGE = "Your range is: ";
+    public static final String RANGE = "Choose between: ";
     private static final String DELIMITER = " ";
 
     public void printMessage(String message) {
