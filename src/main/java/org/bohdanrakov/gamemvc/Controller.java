@@ -34,6 +34,25 @@ public class Controller {
 
     //Utility Methods
 
+    /**
+     * Gets user input with {@code inputIntValue()}
+     * and performs checking if the user input is in game's range with {@code isValueInRange()}
+     * @param scanner {@code Scanner}
+     * @return {@code int} guess made by user
+     */
+    public int getUserInput(Scanner scanner) {
+        view.printMessageAndTwoInts(View.RANGE, game.getRangeMin(),
+                game.getRangeMax());
+
+        int guess = inputIntValue(scanner);
+
+        while (!isValueInRange(guess, game.getRangeMin(), game.getRangeMax())) {
+            guess = inputIntValue(scanner);
+        }
+
+        return guess;
+    }
+
     public int inputIntValue(Scanner scanner) {
         view.printMessage(View.INPUT_INT_DATA);
         while (!scanner.hasNextInt()) {
@@ -57,25 +76,6 @@ public class Controller {
         } else {
             return true;
         }
-    }
-
-    /**
-     * Gets user input with {@code inputIntValue()}
-     * and performs checking if the user input is in game's range with {@code isValueInRange()}
-     * @param scanner {@code Scanner}
-     * @return {@code int} guess made by user
-     */
-    public int getUserInput(Scanner scanner) {
-        view.printMessageAndTwoInts(View.RANGE, game.getRangeMin(),
-                game.getRangeMax());
-
-        int guess = inputIntValue(scanner);
-
-        while (!isValueInRange(guess, game.getRangeMin(), game.getRangeMax())) {
-            guess = inputIntValue(scanner);
-        }
-
-        return guess;
     }
 
     /**
